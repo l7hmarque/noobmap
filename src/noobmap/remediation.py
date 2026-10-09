@@ -209,6 +209,140 @@ REMEDIATION = {
         ],
         "Não bloqueie o e-mail que a empresa realmente usa, sem confirmar antes.",
     ),
+    "servico-rpcbind": _entry(
+        "Revisar o rpcbind/portmapper exposto (porta 111)",
+        "Painel do roteador > Firewall / Port Forwarding",
+        [
+            "Se não houver serviço de arquivos (NFS) na rede, bloqueie a porta 111 de entrada.",
+            "Se houver, restrinja o acesso à rede local (nunca pela internet).",
+        ],
+        "Não bloqueie se a rede usa NFS internamente, sem confirmar antes.",
+    ),
+    "servico-rexec": _entry(
+        "Desligar o rexec (serviço remoto antigo, porta 512)",
+        "Painel do roteador > Firewall / Acesso remoto",
+        [
+            "Desative serviços r (rsh/rexec/rlogin) — são antigos e sem criptografia.",
+            "Remova qualquer encaminhamento dessas portas para a internet.",
+        ],
+        "Não desligue o acesso remoto que a empresa realmente usa (prefira SSH/VPN).",
+    ),
+    "servico-rlogin": _entry(
+        "Desligar o rlogin (serviço remoto antigo, porta 513)",
+        "Painel do roteador > Firewall / Acesso remoto",
+        [
+            "Desative o rlogin — não tem criptografia.",
+            "Para acesso remoto, use SSH ou VPN.",
+        ],
+        "Prefira SSH/VPN; só desative após confirmar que ninguém depende disso.",
+    ),
+    "servico-rsh": _entry(
+        "Desligar o rsh (serviço remoto antigo, porta 514)",
+        "Painel do roteador > Firewall / Acesso remoto",
+        [
+            "Desative o rsh — não tem criptografia.",
+            "Remova encaminhamentos da porta 514 para a internet.",
+        ],
+        "Prefira SSH/VPN; só desative após confirmar que ninguém depende disso.",
+    ),
+    "servico-oracle": _entry(
+        "Fechar o banco Oracle exposto (porta 1521)",
+        "Painel do roteador > Firewall / Port Forwarding",
+        [
+            "Remova o encaminhamento da porta 1521 para a internet.",
+            "Bancos de dados devem ficar só na rede interna.",
+            "Para acesso remoto legítimo, use VPN.",
+        ],
+        "Não pare o banco; apenas feche o acesso vindo da internet.",
+    ),
+    "servico-nfs": _entry(
+        "Proteger o compartilhamento NFS (porta 2049)",
+        "Painel do roteador > Firewall / Port Forwarding",
+        [
+            "Remova qualquer encaminhamento da porta 2049 para a internet.",
+            "Restrinja o NFS por IP/cliente na própria máquina que compartilha.",
+        ],
+        "Não desligue o NFS interno se ele for usado pela empresa.",
+    ),
+    "servico-docker": _entry(
+        "Fechar a API do Docker exposta (porta 2375) — URGENTE",
+        "Servidor (não o roteador): arquivo de configuração do Docker",
+        [
+            "Nunca exponha a API do Docker (2375/2376) na internet: dá controle total da máquina.",
+            "Remova o '-H tcp://...' da configuração do daemon.",
+            "Use apenas o socket local; para remoto, use SSH.",
+        ],
+        "Fazer isso sem saber pode derrubar contêineres em uso — faça com calma e backup.",
+    ),
+    "servico-winrm": _entry(
+        "Proteger a gerência remota Windows / WinRM (porta 5985)",
+        "Painel do roteador > Firewall / Port Forwarding",
+        [
+            "Remova o encaminhamento da porta 5985 para a internet (use 5986 com TLS só via VPN).",
+            "Para administrar remotamente, prefira VPN.",
+        ],
+        "Não desligue o WinRM usado internamente pela equipe de TI.",
+    ),
+    "servico-redis": _entry(
+        "Fechar o Redis exposto (porta 6379)",
+        "Servidor (não o roteador): configuração do Redis",
+        [
+            "Redis não deve ficar acessível de fora da rede.",
+            "Tire o encaminhamento da porta 6379 no roteador.",
+            "Ative senha (requirepass) e escute só em 127.0.0.1/rede local.",
+        ],
+        "O Redis pode guardar dados em uso — não apague nada, apenas restrinja o acesso.",
+    ),
+    "servico-https-alt": _entry(
+        "Revisar o painel HTTPS alternativo exposto (porta 8443)",
+        "Painel do roteador > Administração / Serviços",
+        [
+            "Confirme se esse painel precisa mesmo estar acessível.",
+            "Use senha forte e mantenha o firmware atualizado.",
+            "Prefira acesso local ou via VPN em vez de expor na internet.",
+        ],
+        "Não desative o painel local por onde você administra o equipamento.",
+    ),
+    "servico-jupyter": _entry(
+        "Fechar o Jupyter exposto (porta 8888) — execução de código",
+        "Servidor (não o roteador): configuração do Jupyter",
+        [
+            "Um Jupyter aberto permite executar código na máquina — feche o acesso externo.",
+            "Tire o encaminhamento da porta 8888 no roteador.",
+            "Use senha/token e escute só na rede local ou via VPN.",
+        ],
+        "Não apague notebooks; apenas restrinja quem consegue acessar.",
+    ),
+    "servico-elasticsearch": _entry(
+        "Fechar o Elasticsearch exposto (porta 9200)",
+        "Servidor (não o roteador): configuração do Elasticsearch",
+        [
+            "Elasticsearch não deve ficar acessível de fora da rede.",
+            "Tire o encaminhamento da porta 9200 no roteador.",
+            "Ative autenticação e escute só na rede local.",
+        ],
+        "Não pare o serviço de busca; apenas restrinja o acesso.",
+    ),
+    "servico-memcached": _entry(
+        "Fechar o Memcached exposto (porta 11211)",
+        "Servidor (não o roteador): configuração do Memcached",
+        [
+            "Memcached pode ser abusado em ataques de amplificação — não exponha na internet.",
+            "Tire o encaminhamento da porta 11211 no roteador.",
+            "Escute só em 127.0.0.1/rede local.",
+        ],
+        "Não pare o cache; apenas restrinja o acesso.",
+    ),
+    "servico-mongodb": _entry(
+        "Fechar o MongoDB exposto (porta 27017)",
+        "Painel do roteador > Firewall / Port Forwarding",
+        [
+            "Remova o encaminhamento da porta 27017 para a internet.",
+            "Ative autenticação e restrinja o banco à rede local.",
+            "Para acesso remoto, use VPN.",
+        ],
+        "Não pare o banco; apenas feche o acesso vindo da internet.",
+    ),
     "precisa-verificacao": PLACEHOLDER,
 }
 

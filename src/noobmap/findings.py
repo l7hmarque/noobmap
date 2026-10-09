@@ -29,6 +29,20 @@ PORT_RULES = {
     5432: ("servico-postgres", "Alto", "Banco de dados PostgreSQL exposto"),
     5900: ("servico-vnc", "Alto", "Acesso remoto por VNC exposto"),
     8080: ("servico-http-alt", "Medio", "Site/painel HTTP alternativo exposto"),
+    111: ("servico-rpcbind", "Medio", "Serviço rpcbind/portmapper exposto"),
+    512: ("servico-rexec", "Alto", "r-services (rexec) exposto — sem criptografia"),
+    513: ("servico-rlogin", "Alto", "rlogin exposto — sem criptografia"),
+    514: ("servico-rsh", "Alto", "rsh exposto — sem criptografia"),
+    1521: ("servico-oracle", "Alto", "Banco de dados Oracle exposto"),
+    2049: ("servico-nfs", "Alto", "Compartilhamento de arquivos NFS exposto"),
+    2375: ("servico-docker", "Critico", "API do Docker exposta — controle total do host"),
+    5985: ("servico-winrm", "Alto", "Gerência remota Windows (WinRM) exposta"),
+    6379: ("servico-redis", "Alto", "Redis exposto (banco de dados em memória)"),
+    8443: ("servico-https-alt", "Informativo", "Painel HTTPS alternativo exposto"),
+    8888: ("servico-jupyter", "Alto", "Jupyter exposto — execução remota de código"),
+    9200: ("servico-elasticsearch", "Alto", "Elasticsearch exposto (busca/dados)"),
+    11211: ("servico-memcached", "Alto", "Memcached exposto (cache em memória)"),
+    27017: ("servico-mongodb", "Alto", "Banco de dados MongoDB exposto"),
 }
 
 SERVICE_RULES = {
@@ -49,6 +63,15 @@ SERVICE_RULES = {
     "vnc": PORT_RULES[5900],
     "domain": PORT_RULES[53],
     "smtp": PORT_RULES[25],
+    "rpcbind": PORT_RULES[111],
+    "nfs": PORT_RULES[2049],
+    "docker": PORT_RULES[2375],
+    "wsman": PORT_RULES[5985],
+    "redis": PORT_RULES[6379],
+    "oracle-tns": PORT_RULES[1521],
+    "http-proxy": PORT_RULES[8080],
+    "mongod": PORT_RULES[27017],
+    "memcached": PORT_RULES[11211],
 }
 
 DEFAULT_RULE = (

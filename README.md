@@ -14,12 +14,10 @@
 </p>
 
 <p align="center">
-  <a href="#-português">🇧🇷 Português</a> · <a href="#-english">🇬🇧 English</a>
+  🇧🇷 <strong>Português</strong> · <a href="README.en.md">🇬🇧 English</a>
 </p>
 
 ---
-
-## 🇧🇷 Português
 
 **noobmap** é uma ferramenta de linha de comando que faz uma **varredura de segurança básica**
 na sua rede doméstica ou do seu comércio e gera um **relatório em linguagem simples**, com um
@@ -49,7 +47,9 @@ roda um comando e recebe um relatório que diz **o que está exposto** e **como 
 
 ✅ **Faz**
 - Descobre **quais aparelhos** estão na rede e **quais portas/serviços** estão abertos.
-- Identifica **serviços de risco** comuns: Telnet, SMB, RDP, VNC, bancos de dados expostos.
+- Identifica **serviços de risco** comuns: Telnet, SMB, RDP, VNC, bancos de dados expostos
+  (MySQL, PostgreSQL, SQL Server, Oracle, MongoDB, Redis, Elasticsearch, Memcached), API do
+  Docker exposta, WinRM, Jupyter, NFS e serviços remotos antigos (rsh/rlogin/rexec).
 - Marca cada achado por **gravidade**: Crítico → Alto → Médio → Baixo → Informativo.
 - Gera um **relatório HTML offline** (abre sem internet) + um resumo no terminal.
 - Para cada achado, dá um passo a passo: **onde ir, o que mudar e o que NÃO mexer**.
@@ -123,7 +123,7 @@ Sem `--autorizado`, a ferramenta **aborta** com código 3 e não escaneia nada.
 ### Limitações (transparência)
 
 O noobmap é uma **linha de base** — a "segurança mínima que todos deveriam ter". Ele:
-- cobre ~16 **serviços comuns** de forma **genérica** (a orientação serve para a maioria dos roteadores, com um espaço para o seu modelo específico);
+- cobre **~30 serviços comuns** de forma **genérica** (a orientação serve para a maioria dos roteadores, com um espaço para o seu modelo específico);
 - é **advisory-only**: encontra exposição e orienta; **não** garante que a rede ficou 100% segura;
 - **não** substitui **atualização de firmware**, **gestão de senhas**, **antivírus** e **educação do usuário**.
 
@@ -159,29 +159,4 @@ Leia **[CONTRIBUTING.md](CONTRIBUTING.md)**. Ideias muito bem-vindas: **orienta�
 
 ---
 
-## 🇬🇧 English
-
-**noobmap** is a command-line tool that runs a **basic security scan** on your home or small-business
-network and produces a **plain-language report** with **step-by-step fixes** anyone can follow.
-
-Runs on **Kali Live** from a USB stick (**nothing installed**). It wraps **Nmap** with **conservative,
-non-intrusive** options (no exploit scripts), is **advisory-only** (it never changes your network),
-and **fails closed** without explicit written authorization.
-
-> ⚠️ **Authorized use only.** Scanning networks you don't own or have permission to test is illegal.
-
-✅ **Does:** discover open ports/services, flag risky services (Telnet, SMB, RDP, VNC, databases),
-rate findings by severity, produce an **offline HTML report** + terminal summary with "where to go /
-what to change / what **not** to touch".
-
-🚫 **Doesn't:** exploit anything, read encrypted traffic, change your network, or cover wi-fi/phones/
-phishing/local malware.
-
-**Quick start** (inside `noobmap-<version>/` on Kali Live):
-
-```bash
-chmod +x noobmap
-./noobmap scan --autorizado --cliente "Client name" --rede 192.168.1.0/24
-```
-
-Full guide: **[docs/tutorial.en.md](docs/tutorial.en.md)** · License: **MIT**.
+<p align="center"><a href="README.en.md">🇬🇧 Read this in English →</a></p>
