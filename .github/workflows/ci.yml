@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package (editable)
+        run: pip install -e .
+
+      - name: Run test suite
+        env:
+          PYTHONPATH: src
+        run: python -m unittest discover -s tests -v
+
+      - name: Smoke test — CLI runs
+        run: noobmap --version
+
+      - name: Smoke test — fails closed without authorization
+        run: |
+          if noobmap scan --cliente "ci" --rede 192.168.1.0/24 --saida /tmp/ci-out; then
+            echo "ERROR: scan ran without --autorizado"; exit 1
+          else
+            echo "OK: aborted without authorization (exit $?)"
+          fi
+          test ! -e /tmp/ci-out
