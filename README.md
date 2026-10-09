@@ -31,10 +31,6 @@ and get a report telling you **what is exposed** and **how to close that door**.
 > illegal. The tool **requires** you to confirm written authorization and **refuses to run**
 > without it.
 
-<p align="center">
-  <img src="docs/img/demo.gif" width="820" alt="noobmap demo: it refuses to scan without authorization, then scans and prints a severity summary">
-</p>
-
 ### 📋 Table of contents
 
 - [What it does (and what it does **not** do)](#what-it-does-and-what-it-does-not-do)
