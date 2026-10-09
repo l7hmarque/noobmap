@@ -16,13 +16,15 @@ Se você encontrou uma falha **no noobmap** (por exemplo, uma forma de burlar o 
 autorização, um caminho não-intencional de escrita, ou execução de código), **não** abra
 uma issue pública.
 
-Envie um e-mail para o mantenedor (veja a aba Security).
-- descrição do problema e impacto;
-- passos para reproduzir;
-- versão do noobmap.
+Use o canal privado do GitHub:
+1. Abra a aba **Security** deste repositório.
+2. Clique em **Report a vulnerability** (Relatar uma vulnerabilidade).
+3. Descreva o problema e o impacto, com passos para reproduzir e a versão do noobmap.
 
-Você receberá um retorno assim que possível. Vulnerabilidades corrigidas serão
-documentadas no `CHANGELOG.md`.
+Isso abre uma conversa **privada** com o mantenedor. Se a opção não estiver disponível,
+abra uma issue **sem detalhes sensíveis** pedindo um contato privado.
+
+Vulnerabilidades corrigidas serão documentadas no `CHANGELOG.md`.
 
 ## Escopo
 
