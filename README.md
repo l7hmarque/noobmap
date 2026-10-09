@@ -4,7 +4,7 @@
 
 <h1 align="center">noobmap</h1>
 
-<p align="center"><strong>Segurança de rede básica, explicada para leigos — rodando no Kali Live (pendrive), sem instalar nada.</strong></p>
+<p align="center"><strong>Basic network security, explained for non-experts — running on Kali Live (USB), installing nothing.</strong></p>
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License: MIT"></a>
@@ -14,149 +14,163 @@
 </p>
 
 <p align="center">
-  🇧🇷 <strong>Português</strong> · <a href="README.en.md">🇬🇧 English</a>
+  🇬🇧 <strong>English</strong> · <a href="README.pt-BR.md">🇧🇷 Português</a>
 </p>
 
 ---
 
-**noobmap** é uma ferramenta de linha de comando que faz uma **varredura de segurança básica**
-na sua rede doméstica ou do seu comércio e gera um **relatório em linguagem simples**, com um
-**passo a passo de correção** que qualquer pessoa consegue seguir.
+**noobmap** is a command-line tool that runs a **basic security scan** on your home or
+small-business network and produces a **plain-language report** with **step-by-step fixes**
+anyone can follow.
 
-A ideia é simples: **todo mundo merece uma segurança mínima** — e isso não precisa ser
-complicado nem caro. Você dá boot no **Kali Live** por um pendrive (*não* instala nada),
-roda um comando e recebe um relatório que diz **o que está exposto** e **como fechar essa porta**.
+The idea is simple: **everyone deserves minimum security** — and it shouldn't be complicated
+or expensive. You boot **Kali Live** from a USB stick (**nothing installed**), run one command,
+and get a report telling you **what is exposed** and **how to close that door**.
 
-> ⚠️ **Use apenas com autorização.** Escanear rede de terceiros sem permissão é ilegal.
-> A ferramenta **exige** que você confirme a autorização escrita e, sem isso, **não roda**.
+> ⚠️ **Authorized use only.** Scanning networks you don't own or have permission to test is
+> illegal. The tool **requires** you to confirm written authorization and **refuses to run**
+> without it.
 
-### 📋 Índice
+<p align="center">
+  <img src="docs/img/demo.gif" width="820" alt="noobmap demo: it refuses to scan without authorization, then scans and prints a severity summary">
+</p>
 
-- [O que ele faz (e o que **não** faz)](#o-que-ele-faz-e-o-que-não-faz)
-- [Como funciona](#como-funciona)
-- [Preparativos: Kali Live no pendrive](#preparativos-kali-live-no-pendrive)
-- [Uso](#uso)
-- [Exemplo de relatório](#exemplo-de-relatório)
-- [Limitações (transparência)](#limitações-transparência)
-- [Estrutura do projeto](#estrutura-do-projeto)
-- [Testes](#testes)
-- [Contribuir](#contribuir)
-- [Licença](#licença)
+### 📋 Table of contents
 
-### O que ele faz (e o que **não** faz)
+- [What it does (and what it does **not** do)](#what-it-does-and-what-it-does-not-do)
+- [How it works](#how-it-works)
+- [Setup: Kali Live on a USB stick](#setup-kali-live-on-a-usb-stick)
+- [Usage](#usage)
+- [Example report](#example-report)
+- [Limitations (in the open)](#limitations-in-the-open)
+- [Project layout](#project-layout)
+- [Tests](#tests)
+- [Contributing](#contributing)
+- [License](#license)
 
-✅ **Faz**
-- Descobre **quais aparelhos** estão na rede e **quais portas/serviços** estão abertos.
-- Identifica **serviços de risco** comuns: Telnet, SMB, RDP, VNC, bancos de dados expostos
-  (MySQL, PostgreSQL, SQL Server, Oracle, MongoDB, Redis, Elasticsearch, Memcached), API do
-  Docker exposta, WinRM, Jupyter, NFS e serviços remotos antigos (rsh/rlogin/rexec).
-- Marca cada achado por **gravidade**: Crítico → Alto → Médio → Baixo → Informativo.
-- Gera um **relatório HTML offline** (abre sem internet) + um resumo no terminal.
-- Para cada achado, dá um passo a passo: **onde ir, o que mudar e o que NÃO mexer**.
+### What it does (and what it does **not** do)
 
-🚫 **Não faz**
-- **Não explora falhas** (nenhum Metasploit, nenhuma invasão).
-- **Não lê tráfego criptografado** nem captura senhas.
-- **Não altera nada** na sua rede: apenas **orienta** — *você* aplica as mudanças.
-- Não avalia **wi-fi**, celulares, phishing ou malware local.
-- Não substitui um pentest profissional (veja [Limitações](#limitações-transparência)).
+✅ **Does**
+- Finds **which devices** are on the network and **which ports/services** are open.
+- Flags common **risky services**: Telnet, SMB, RDP, VNC, exposed databases
+  (MySQL, PostgreSQL, SQL Server, Oracle, MongoDB, Redis, Elasticsearch, Memcached),
+  an exposed Docker API, WinRM, Jupyter, NFS, and legacy remote services (rsh/rlogin/rexec).
+- Rates every finding by **severity**: Critical → High → Medium → Low → Informational.
+- Produces an **offline HTML report** (opens with no internet) plus a terminal summary.
+- For each finding, gives a walkthrough: **where to go, what to change, what NOT to touch**.
 
-### Como funciona
+🚫 **Does not**
+- **Exploit anything** (no Metasploit, no intrusion).
+- **Read encrypted traffic** or capture passwords.
+- **Change anything** on your network — it only **advises**; *you* apply the changes.
+- Cover **wi-fi**, phones, phishing, or local malware.
+- Replace a professional penetration test (see [Limitations](#limitations-in-the-open)).
+
+### How it works
 
 ```
-Autorização (RoE) → Varredura Nmap → Análise + Gravidade → Relatório HTML → Correções → Re-scan
+Authorization (RoE) → Nmap scan → Analysis + Severity → HTML report → Fixes → Re-scan
 ```
 
-Diagramas interativos (abra no navegador):
-- [Visão geral — como o noobmap funciona](docs/diagramas/noobmap-como-funciona.html)
-- [Por dentro — do comando nmap ao relatório](docs/diagramas/noobmap-por-dentro.html)
+Interactive diagrams (open in a browser):
+- [Overview — how noobmap works](docs/diagramas/noobmap-como-funciona.html)
+- [Under the hood — from the nmap command to the report](docs/diagramas/noobmap-por-dentro.html)
 
-O motor é o **[Nmap](https://nmap.org/)** (já vem no Kali), chamado com opções **conservadoras**:
+The engine is **[Nmap](https://nmap.org/)** (already on Kali), called with **conservative** options:
 
-| Opção | O que faz |
+| Option | What it does |
 |---|---|
-| `-sV` | descobre a **versão** de cada serviço |
-| `--top-ports 100` | varre só os **100 serviços mais comuns** |
-| `-Pn` | varre mesmo se o aparelho **bloquear ping** |
-| `-T3` | **ritmo moderado**, não sobrecarrega a rede |
-| `-oX` | salva o resultado bruto em **XML** (evidência) |
-| *(sem `--script`)* | **nenhum** teste de exploração/invasão |
+| `-sV` | detects the **version** of each service |
+| `--top-ports 100` | scans only the **100 most common services** |
+| `-Pn` | scans even if the device **blocks ping** |
+| `-T3` | **moderate pace**, doesn't overload the network |
+| `-oX` | saves the raw result as **XML** (evidence) |
+| *(no `--script`)* | **no** exploit/intrusion testing at all |
 
-O noobmap só aceita **redes privadas** (`10.x`, `172.16–31.x`, `192.168.x`) e no máximo **/24 (254 aparelhos)**.
+noobmap accepts **private networks only** (`10.x`, `172.16–31.x`, `192.168.x`) and at most **/24 (254 devices)**.
 
-### Preparativos: Kali Live no pendrive
+### Setup: Kali Live on a USB stick
 
-1. **Pendrive** de 8 GB+ e um programa para gravá-lo: [Rufus](https://rufus.ie/) (Windows) ou [balenaEtcher](https://etcher.balena.io/) (qualquer SO).
-2. Baixe a ISO do **Kali Linux Live** em [kali.org/get-kali](https://www.kali.org/get-kali/) (opção *Live Boot*).
-3. Grave a ISO no pendrive (isso **apaga** o pendrive).
-4. Dê **boot pelo pendrive** (tecla de boot: `F12`, `F2`, `DEL`, `ESC`… depende da marca).
-5. Escolha a opção **"Live system"** (não instala nada no computador).
+1. A **USB stick, 8 GB+**, and a writer: [Rufus](https://rufus.ie/) (Windows) or [balenaEtcher](https://etcher.balena.io/) (any OS).
+2. Download the **Kali Linux Live** ISO from [kali.org/get-kali](https://www.kali.org/get-kali/) (the *Live Boot* option).
+3. Flash the ISO to the stick (this **erases** it).
+4. **Boot from the USB** (boot key: `F12`, `F2`, `DEL`, `ESC`… depends on the brand).
+5. Choose **"Live system"** (installs nothing on the computer).
 
-O passo a passo detalhado (com o que fazer em cada tela) está em **[docs/TUTORIAL.md](docs/TUTORIAL.md)**.
+The detailed, screen-by-screen guide is in **[docs/TUTORIAL.md](docs/TUTORIAL.md)**.
 
-### Uso
+### Usage
 
-No terminal do Kali Live, dentro da pasta do noobmap:
+In the Kali Live terminal, inside the noobmap folder:
 
 ```bash
 chmod +x noobmap
 ./noobmap --version
 
-# 1) Faça o cliente ler e assinar o termo: docs/roe/termo-de-autorizacao.md
-# 2) Rode a varredura (troque pelo nome e pela rede dele):
-./noobmap scan --autorizado --cliente "Mercado do Zé" --rede 192.168.1.0/24
+# 1) Have the client read and sign the term: docs/roe/terms-of-engagement.md
+# 2) Run the scan (replace with their name and network):
+./noobmap scan --autorizado --cliente "Client name" --rede 192.168.1.0/24
 ```
 
-Saída em `noobmap-out/<cliente>/<data>/`:
-- `relatorio.html` — o documento para o cliente (abra no navegador).
-- `nmap_bruto.xml` — dado técnico (guarde como evidência).
-- `autorizacao.json` — prova de que havia autorização.
+Output goes to `noobmap-out/<client>/<date>/`:
+- `relatorio.html` — the client document (open in a browser).
+- `nmap_bruto.xml` — raw data (keep as evidence).
+- `autorizacao.json` — proof that authorization existed.
 
-Sem `--autorizado`, a ferramenta **aborta** com código 3 e não escaneia nada.
+Without `--autorizado`, the tool **aborts** with exit code 3 and scans nothing.
 
-### Exemplo de relatório
+See **[docs/usage.md](docs/usage.md)** for details.
+
+### Example report
 
 <p align="center">
-  <img src="docs/img/relatorio-exemplo.png" width="760" alt="Exemplo de relatório do noobmap">
+  <img src="docs/img/relatorio-exemplo.png" width="760" alt="Example noobmap report">
 </p>
 
-### Limitações (transparência)
+### Limitations (in the open)
 
-O noobmap é uma **linha de base** — a "segurança mínima que todos deveriam ter". Ele:
-- cobre **~30 serviços comuns** de forma **genérica** (a orientação serve para a maioria dos roteadores, com um espaço para o seu modelo específico);
-- é **advisory-only**: encontra exposição e orienta; **não** garante que a rede ficou 100% segura;
-- **não** substitui **atualização de firmware**, **gestão de senhas**, **antivírus** e **educação do usuário**.
+noobmap is a **baseline** — the "minimum security everyone should have". It:
+- covers **~30 common services** in a **generic** way (the guidance fits most routers, with a
+  documented extension point for your specific model);
+- is **advisory-only**: it finds exposure and advises; it does **not** guarantee the network is
+  100% safe;
+- does **not** replace **firmware updates**, **password management**, **antivirus**, and
+  **user awareness**.
 
-Ele **reduz bastante** o risco de ataques remotos automatizados comuns (**se** as correções forem aplicadas), mas **0-days, phishing e falhas locais ficam de fora**. Dito isso, uma rede sem essa checagem está exposta a problemas que **deveriam** estar fechados.
+It **substantially reduces** the risk of common automated remote attacks (**if** the fixes are
+applied), but **0-days, phishing, and local flaws stay out of scope**. That said, a network
+without this check is exposed to problems that **should** already be closed.
 
-### Estrutura do projeto
+### Project layout
 
 ```
-noobmap            # comando (wrapper bash)
+noobmap            # command (bash wrapper)
 pyproject.toml
 src/noobmap/       # cli, authorization, scan, findings, remediation, report, storage, pipeline
-tests/             # 71 testes (unittest)
+tests/             # 71 tests (unittest)
 scripts/           # build_release.py, canary.py, audit.py
-docs/              # TUTORIAL, FAQ, diagramas, termo RoE, ADRs
+docs/              # tutorial, FAQ, usage, diagrams, RoE term, ADRs
 ```
 
-### Testes
+### Tests
 
 ```bash
-PYTHONPATH=src python -m unittest discover -s tests     # 71 testes, sem dependências externas
-python scripts/build_release.py                          # gera dist/noobmap-<versão>.zip + checksum
-python scripts/canary.py                                 # checagens de saúde
-python scripts/audit.py                                  # testes + invariantes
+PYTHONPATH=src python -m unittest discover -s tests     # 71 tests, no external dependencies
+python scripts/build_release.py                          # builds dist/noobmap-<version>.zip + checksum
+python scripts/canary.py                                 # health checks
+python scripts/audit.py                                  # tests + invariants
 ```
 
-### Contribuir
+### Contributing
 
-Leia **[CONTRIBUTING.md](CONTRIBUTING.md)**. Ideias muito bem-vindas: **orientações de correção para modelos de roteador específicos** (Mikrotik, TP-Link, Intelbras, Ubiquiti…), novas regras de gravidade e traduções.
+Read **[CONTRIBUTING.md](CONTRIBUTING.md)**. Especially welcome: **remediation guidance for
+specific router models** (Mikrotik, TP-Link, Intelbras, Ubiquiti…), new severity rules, and
+translations.
 
-### Licença
+### License
 
-**[MIT](LICENSE)** — use, estude, modifique e compartilhe.
+**[MIT](LICENSE)** — use it, study it, modify it, share it.
 
 ---
 
-<p align="center"><a href="README.en.md">🇬🇧 Read this in English →</a></p>
+<p align="center"><a href="README.pt-BR.md">🇧🇷 Ler em Português →</a></p>

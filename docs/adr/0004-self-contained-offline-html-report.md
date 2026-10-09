@@ -1,58 +1,58 @@
-# ADR-0004: Relatório em HTML offline self-contained (+ resumo no terminal)
+# ADR-0004: Self-contained offline HTML report (+ terminal summary)
 
 **Date**: 2026-10-08
 **Status**: Accepted
-**Deciders**: Architect (revisão do PRD `security-scan-and-fix`)
+**Deciders**: Architect (review of the `security-scan-and-fix` PRD)
 
 ## Context
 
-O operador roda o Kali Live a partir de um **pendrive/USB**, sem persistência entre boots
-(PRD Risks e Open Questions). Um relatório que vive só na memória ou num caminho volátil do Live
-**se perde no reboot** (problema apontado em **AC5**). Além disso, o público é **leigo**, então a
-saída precisa ser legível por humano, sem jargão, e útil fora do terminal. O PRD (Technical
-Decisions, linha 42) define HTML self-contained + resumo no terminal.
+The operator runs Kali Live from a **USB stick**, with no persistence between boots. A report that
+lives only in memory or in a volatile Live path **is lost on reboot** (a problem noted in **AC5**).
+Also, the audience is **non-technical**, so the output must be human-readable, jargon-free, and
+useful outside the terminal. The PRD (Technical Decisions) defines self-contained HTML + a terminal
+summary.
 
 ## Decision
 
-Ao fim do scan, gerar um **arquivo HTML self-contained (single-file, offline, sem servidor)** —
-CSS/JS e dados embutidos — salvo em **local persistente (USB)**, acompanhado de um **resumo curto no
-terminal**. Isso atende **AC3** (arquivo HTML com resumo em linguagem simples, achados por severidade
-e resumo no terminal) e **AC5** (persistência entre boots).
+At the end of the scan, generate a **self-contained HTML file (single-file, offline, no server)** —
+CSS/JS and data embedded — saved to a **persistent location (USB)**, accompanied by a **short
+terminal summary**. This satisfies **AC3** (HTML with a plain-language summary, findings by severity,
+and a terminal summary) and **AC5** (persistence across boots).
 
 ## Alternatives Considered
 
-### Alternative 1: Saída somente em texto/terminal
-- **Pros**: simples de produzir; sem dependências.
-- **Cons**: difícil de ler e compartilhar para um leigo; não organiza achados por severidade de forma
-  visual; não sobrevive ao reboot se não for salvo.
-- **Why not**: não atende ao requisito de relatório legível e portátil (**AC3**); terminal sozinho não
-  é um artefato entregável ao cliente.
+### Alternative 1: Terminal/text output only
+- **Pros**: simple to produce; no dependencies.
+- **Cons**: hard for a non-technical person to read and share; no visual severity grouping; not
+  persistent unless saved.
+- **Why not**: does not meet the readable, portable report requirement (**AC3**); terminal alone is
+  not a client-deliverable artifact.
 
-### Alternative 2: Relatório web hospedado (servidor/backend)
-- **Pros**: acessível por URL; centralização e histórico.
-- **Cons**: exige servidor e conexão inexistentes em campo; dependente de rede do cliente; reintroduz
-  a stack web rejeitada em **ADR-0001**.
-- **Why not**: incompatível com uso offline no Kali Live; só faria sentido no painel multi-cliente
-  (fora de escopo).
+### Alternative 2: Hosted web report (server/backend)
+- **Pros**: reachable by URL; centralization and history.
+- **Cons**: requires a server and connectivity that don't exist in the field; depends on the client's
+  network; reintroduces the web stack rejected in **ADR-0001**.
+- **Why not**: incompatible with offline use on Kali Live; would only make sense in the multi-client
+  panel (out of scope).
 
-### Alternative 3: PDF gerado localmente
-- **Pros**: formato portátil e imprimível.
-- **Cons**: tipografia/paginação mais rígidas; navegação e destaque por severidade mais pobres;
-  dependência de biblioteca de geração de PDF.
-- **Why not**: o HTML single-file já abre em qualquer navegador (sem instalação), é mais flexível e
-  pode ser impresso/PDF pelo próprio browser quando desejado.
+### Alternative 3: PDF generated locally
+- **Pros**: portable and printable format.
+- **Cons**: rigid typography/pagination; poorer navigation and severity highlighting; dependency on
+  a PDF library.
+- **Why not**: the single-file HTML already opens in any browser (no install), is more flexible, and
+  can be printed/to PDF by the browser when needed.
 
 ## Consequences
 
 ### Positive
-- **Persistência**: arquivo escrito no USB sobrevive ao reboot do Kali Live (**AC5**).
-- **Legibilidade**: layout com resumo simples e achados por severidade atende ao leigo (**AC3**).
-- **Portátil/offline**: abre em qualquer navegador sem internet nem instalação (**AC3**).
+- **Persistence**: the file written to USB survives a Kali Live reboot (**AC5**).
+- **Readability**: a layout with a simple summary and findings by severity suits non-experts (**AC3**).
+- **Portable/offline**: opens in any browser with no internet and no install (**AC3**).
 
 ### Negative
-- Geração manual de HTML (templating) e cuidado com escaping/encoding UTF-8 (pt-BR).
-- O usuário precisa escolher/lembrar o caminho persistente do USB para o arquivo.
+- Manual HTML generation (templating) and care with escaping/UTF-8 encoding.
+- The user must choose/remember the persistent USB path for the file.
 
 ### Risks
-- **Risco**: salvar em caminho volátil e perder o relatório no reboot.
-  **Mitigação**: default para o dispositivo persistente/USB com confirmação explícita do caminho.
+- **Risk**: saving to a volatile path and losing the report on reboot.
+  **Mitigation**: default to the persistent/USB device with explicit path confirmation.

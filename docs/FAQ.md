@@ -1,61 +1,61 @@
-# FAQ — Perguntas frequentes
+# FAQ — Frequently Asked Questions
 
-### Isso é legal?
-Sim, **desde que você tenha autorização**. Só escaneie redes **suas** ou para as quais o
-responsável deu **autorização escrita**. A ferramenta **exige** essa confirmação (termo
-RoE) e **não roda sem ela**. Escanear rede de terceiros sem permissão é ilegal.
+### Is this legal?
+Yes, **as long as you have authorization**. Only scan networks that are **yours** or for which
+the owner gave **written authorization**. The tool **requires** that confirmation (the RoE
+term) and **won't run without it**. Scanning third-party networks without permission is illegal.
 
-### Preciso saber Linux ou ser "hacker"?
-Não. O [tutorial](TUTORIAL.md) foi escrito para quem **nunca usou Linux**. Você só precisa
-dar boot no Kali Live e digitar **um comando**.
+### Do I need to know Linux or be a "hacker"?
+No. The [tutorial](TUTORIAL.md) is written for people who have **never used Linux**. You just
+boot Kali Live and type **one command**.
 
-### Funciona no Windows ou no Mac?
-O jeito recomendado é o **Kali Live** (pendrive), que já traz o `nmap`. O noobmap é só
-Python 3 + Nmap: em teoria roda em qualquer sistema com esses dois itens, mas o suporte
-alvo é o **Kali Live** (sem instalar nada).
+### Does it work on Windows or Mac?
+The recommended way is **Kali Live** (a USB stick), which already ships `nmap`. noobmap is just
+Python 3 + Nmap, so it can run anywhere those exist, but the target platform is **Kali Live**
+(installing nothing).
 
-### Isso vai derrubar a internet ou os aparelhos?
-**Não.** A varredura é **não invasiva** e em ritmo moderado (`-T3`). O noobmap **não altera
-nada** na rede — ele só observa e relata. Quem aplica as mudanças é você, manualmente.
+### Will it take down the internet or the devices?
+**No.** The scan is **non-intrusive** and at a moderate pace (`-T3`). noobmap **changes nothing**
+on the network — it only observes and reports. You apply the fixes manually.
 
-### Vai instalar algo no meu computador?
-Não. O **Kali Live** roda do pendrive; nada é instalado. Ao desligar, o computador volta
-ao normal.
+### Will it install anything on my computer?
+No. **Kali Live** runs from the USB stick; nothing is installed. When you shut down, the
+computer is back to normal.
 
-### Quanto tempo demora?
-Alguns minutos para uma rede `/24`. Depende de quantos aparelhos respondem.
+### How long does it take?
+A few minutes for a `/24` network. It depends on how many devices respond.
 
-### O que é "autorização (RoE)"?
-"Rules of Engagement": um termo de 1 página (`docs/roe/termo-de-autorizacao.md`) que o
-responsável pela rede assina, autorizando a varredura. É a sua proteção legal.
+### What is "authorization (RoE)"?
+"Rules of Engagement": a one-page term (`docs/roe/terms-of-engagement.md`) that the person
+responsible for the network signs, authorizing the scan. It's your legal protection.
 
-### O relatório é difícil de entender?
-Foi feito para leigos: linguagem simples, riscos por gravidade e um **passo a passo** de
-correção dizendo **onde ir**, **o que mudar** e **o que NÃO mexer**.
+### Is the report hard to understand?
+It's built for non-experts: plain language, risks by severity, and a **step-by-step** fix guide
+telling you **where to go**, **what to change**, and **what NOT to touch**.
 
-### O que faço depois de receber o relatório?
-1. Salve/exporte a configuração do roteador (**backup**).
-2. Aplique as correções **uma a uma**, seguindo o relatório.
-3. Teste a internet e os aparelhos depois de cada mudança.
-4. Rode o noobmap de novo (**re-scan**) para confirmar a melhoria.
+### What do I do after getting the report?
+1. Save/export the router configuration (**backup**).
+2. Apply the fixes **one at a time**, following the report.
+3. Test the internet and devices after each change.
+4. Run noobmap again (**re-scan**) to confirm the improvement.
 
-### Apareceu um "falso positivo"?
-Toda porta aberta **não é necessariamente** uma falha — pode ser um serviço necessário. O
-relatório avisa sobre isso. Na dúvida, **não altere** e confirme o que aquele serviço faz.
+### I got a "false positive"?
+An open port is **not necessarily** a flaw — it may be a needed service. The report warns about
+this. When unsure, **don't change** anything and confirm what that service does.
 
-### Ele avalia wi-fi, celular ou senha fraca?
-**Não.** O noobmap olha **portas/serviços expostos** na rede (foco em ataques remotos
-comuns). Wi-fi, celulares, phishing e senhas ficam fora do escopo.
+### Does it assess wi-fi, phones, or weak passwords?
+**No.** noobmap looks at **exposed ports/services** on the network (focusing on common remote
+attacks). Wi-fi, phones, phishing, and passwords are out of scope.
 
-### Isso deixa minha rede 100% segura?
-Não. É uma **linha de base** ("segurança mínima"). Ele **reduz bastante** o risco de ataques
-remotos automatizados comuns **se** as correções forem aplicadas — mas não substitui
-atualização de firmware, senhas fortes, antivírus e cuidados do usuário.
+### Does it make my network 100% secure?
+No. It's a **baseline** ("minimum security"). It **substantially reduces** the risk of common
+automated remote attacks **if** the fixes are applied — but it does not replace firmware updates,
+strong passwords, antivirus, and user awareness.
 
-### Posso usar comercialmente / cobrar por isso?
-A licença é **MIT** (use à vontade). Mas **lembre-se**: o valor que você entrega é a
-avaliação + a orientação de correção — e isso **exige autorização** de quem contrata.
+### Can I use it commercially / charge for it?
+The license is **MIT** (use freely). But remember: the value you deliver is the assessment +
+remediation guidance — and that **requires authorization** from whoever hires you.
 
-### Como contribuir?
-Veja **[CONTRIBUTING.md](../CONTRIBUTING.md)**. Ajuda muito: orientações de correção para
-**modelos de roteador específicos**, novas regras de gravidade e traduções.
+### How can I contribute?
+See **[CONTRIBUTING.md](../CONTRIBUTING.md)**. Especially welcome: **remediation guidance for
+specific router models**, new severity rules, and translations.

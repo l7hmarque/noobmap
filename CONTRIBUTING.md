@@ -1,56 +1,55 @@
-# Contribuindo com o noobmap
+# Contributing to noobmap
 
-Obrigado pelo interesse! 🎉 Este projeto quer manter a **segurança de rede acessível a
-qualquer pessoa**. Contribuições são muito bem-vindas.
+Thanks for your interest! This project wants to keep **network security accessible to anyone**.
 
-## Formas de ajudar
+## Ways to help
 
-- **Orientações de correção para modelos de roteador específicos** (Mikrotik, TP-Link,
-  Intelbras, Ubiquiti, Asus, etc.). O arquivo `src/noobmap/remediation.py` já tem um
-  "espaço de extensão" genérico — adicione entradas específicas.
-- **Novas regras de gravidade** para serviços/portas (em `src/noobmap/findings.py`).
-- **Traduções** de documentação e mensagens.
-- **Correções de bugs** e melhoria de testes.
+- **Remediation guidance for specific router models** (Mikrotik, TP-Link, Intelbras, Ubiquiti,
+  Asus…). `src/noobmap/remediation.py` already has a generic extension point — add
+  model-specific entries.
+- **New severity rules** for services/ports (`src/noobmap/findings.py`).
+- **Translations** of documentation and messages.
+- **Bug fixes** and better tests.
 
-## Regras do projeto
+## Project rules
 
-- **Não-destrutivo.** O noobmap **nunca** altera a rede. Nada de exploração ativa,
-  força bruta ou `--script` do Nmap.
-- **Falha-fechado.** Nunca publique código que permita uma varredura **sem** o gate de
-  autorização.
-- **Só redes privadas.** Mantenha a validação que recusa faixas públicas e redes > `/24`.
-- **Sem segredos.** Não commite chaves, senhas ou dados reais de clientes.
+- **Non-destructive.** noobmap **never** changes the network. No active exploitation, no
+  brute force, no Nmap `--script`.
+- **Fail-closed.** Never ship code that lets a scan run **without** the authorization gate.
+- **Private networks only.** Keep the validation that rejects public ranges and networks
+  larger than `/24`.
+- **No secrets.** Don't commit keys, passwords, or real client data.
 
-## Ambiente de desenvolvimento
+## Development environment
 
-Requisitos: **Python 3.9+** e (opcional, para varredura real) **Nmap**.
+Requirements: **Python 3.9+** and (optional, for a real scan) **Nmap**.
 
 ```bash
 git clone https://github.com/l7hmarque/noobmap
 cd noobmap
 
-# rodar os testes (sem dependências externas: só a stdlib)
+# run the tests (no external dependencies: stdlib only)
 PYTHONPATH=src python -m unittest discover -s tests
 
-# rodar a ferramenta localmente
+# run the tool locally
 PYTHONPATH=src python -m noobmap --version
 ```
 
-## Fluxo de contribuição
+## Contribution flow
 
-1. Abra uma **issue** descrevendo o que você quer mudar (ou pegue uma existente).
-2. Crie um **branch**: `git checkout -b feat/minha-melhoria`.
-3. **Escreva o teste primeiro** (usamos `unittest`; veja `tests/`).
-4. Implemente a mudança mínima para o teste passar.
-5. Garanta que **tudo passa**: `PYTHONPATH=src python -m unittest discover -s tests`.
-6. Abra um **Pull Request** explicando o "porquê" (não só o "o quê").
+1. Open an **issue** describing what you want to change (or pick an existing one).
+2. Create a **branch**: `git checkout -b feat/my-improvement`.
+3. **Write the test first** (we use `unittest`; see `tests/`).
+4. Implement the minimal change to make the test pass.
+5. Make sure **everything passes**: `PYTHONPATH=src python -m unittest discover -s tests`.
+6. Open a **Pull Request** explaining the "why" (not just the "what").
 
-## Estilo
+## Style
 
-- Python simples, stdlib only (nenhuma dependência externa).
-- Mensagens ao usuário em **português, linguagem simples** (o público é leigo).
-- Mantenha o relatório **offline** (sem assets externos) e **escapando** os dados.
+- Simple Python, stdlib only (no external dependencies).
+- User-facing messages in **Portuguese, plain language** (the audience is non-technical).
+- Keep the report **offline** (no external assets) and **escape** all data.
 
-## Código de conduta
+## Code of conduct
 
-Seja gentil, paciente e didático. O público deste projeto inclui pessoas **começando agora**.
+Be kind, patient, and didactic. This project's audience includes people **just getting started**.

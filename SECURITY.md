@@ -1,37 +1,36 @@
-# Política de Segurança
+# Security Policy
 
-## Uso responsável
+## Responsible use
 
-O **noobmap** é uma ferramenta **defensiva**, de uso **autorizado**. Ele:
-- só aceita **redes privadas** (`10.x`, `172.16–31.x`, `192.168.x`) e no máximo `/24`;
-- **exige** confirmação de autorização escrita (termo RoE) e **falha-fechado** sem ela;
-- é **advisory-only**: **nunca** explora falhas nem altera a rede.
+**noobmap** is a **defensive** tool for **authorized** use. It:
+- accepts **private networks only** (`10.x`, `172.16–31.x`, `192.168.x`) and at most `/24`;
+- **requires** written-authorization (RoE) confirmation and **fails closed** without it;
+- is **advisory-only**: it **never** exploits flaws nor changes the network.
 
-**É ilegal** usar esta ferramenta para escanear redes sem autorização. A responsabilidade
-pelo uso é inteiramente de quem opera a ferramenta.
+**It is illegal** to use this tool to scan networks without authorization. Responsibility for
+use lies entirely with the operator.
 
-## Reportando uma vulnerabilidade
+## Reporting a vulnerability
 
-Se você encontrou uma falha **no noobmap** (por exemplo, uma forma de burlar o gate de
-autorização, um caminho não-intencional de escrita, ou execução de código), **não** abra
-uma issue pública.
+If you found a flaw **in noobmap** (for example, a way to bypass the authorization gate, an
+unintended write path, or code execution), **do not** open a public issue.
 
-Use o canal privado do GitHub:
-1. Abra a aba **Security** deste repositório.
-2. Clique em **Report a vulnerability** (Relatar uma vulnerabilidade).
-3. Descreva o problema e o impacto, com passos para reproduzir e a versão do noobmap.
+Use GitHub's private channel:
+1. Open this repository's **Security** tab.
+2. Click **Report a vulnerability**.
+3. Describe the problem and impact, with reproduction steps and the noobmap version.
 
-Isso abre uma conversa **privada** com o mantenedor. Se a opção não estiver disponível,
-abra uma issue **sem detalhes sensíveis** pedindo um contato privado.
+This opens a **private** conversation with the maintainer. If that option is unavailable,
+open an issue **without sensitive details** asking for a private contact.
 
-Vulnerabilidades corrigidas serão documentadas no `CHANGELOG.md`.
+Fixed vulnerabilities will be documented in `CHANGELOG.md`.
 
-## Escopo
+## Scope
 
-Dentro do escopo:
-- o código em `src/noobmap/` e os scripts de build/checagem.
+In scope:
+- the code in `src/noobmap/` and the build/health-check scripts.
 
-Fora do escopo:
-- o **Nmap** em si (reporte ao projeto Nmap);
-- o **Kali Linux**;
-- uso indevido por parte de terceiros.
+Out of scope:
+- **Nmap** itself (report to the Nmap project);
+- **Kali Linux**;
+- misuse by third parties.

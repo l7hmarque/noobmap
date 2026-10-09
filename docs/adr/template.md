@@ -1,39 +1,39 @@
-# ADR-NNNN: [Título da Decisão]
+# ADR-NNNN: [Decision Title]
 
 **Date**: YYYY-MM-DD
 **Status**: proposed | accepted | deprecated | superseded by ADR-NNNN
-**Deciders**: [quem participou]
+**Deciders**: [who took part]
 
 ## Context
 
-Qual é a situação que motiva esta decisão? Descreva em 2-5 frases o problema,
-as restrições e as forças em jogo.
+What is the situation that motivates this decision? Describe in 2-5 sentences the problem,
+the constraints, and the forces at play.
 
 ## Decision
 
-Qual é a mudança proposta/realizada? Estado em 1-3 frases.
+What is the proposed/made change? State it in 1-3 sentences.
 
 ## Alternatives Considered
 
-### Alternative 1: [Nome]
-- **Pros**: [benefícios]
-- **Cons**: [desvantagens]
-- **Why not**: [motivo específico da rejeição]
+### Alternative 1: [Name]
+- **Pros**: [benefits]
+- **Cons**: [drawbacks]
+- **Why not**: [specific rejection reason]
 
-### Alternative 2: [Nome]
-- **Pros**: [benefícios]
-- **Cons**: [desvantagens]
-- **Why not**: [motivo específico da rejeição]
+### Alternative 2: [Name]
+- **Pros**: [benefits]
+- **Cons**: [drawbacks]
+- **Why not**: [specific rejection reason]
 
 ## Consequences
 
-O que fica mais fácil ou mais difícil por causa desta decisão?
+What becomes easier or harder because of this decision?
 
 ### Positive
-- [benefício 1]
+- [benefit 1]
 
 ### Negative
 - [trade-off 1]
 
 ### Risks
-- [risco e mitigação]
+- [risk and mitigation]

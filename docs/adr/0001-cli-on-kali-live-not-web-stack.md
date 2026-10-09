@@ -1,53 +1,53 @@
-# ADR-0001: Plataforma é um CLI no Kali Live, não uma stack web (Next.js + Postgres + Docker)
+# ADR-0001: Platform is a CLI on Kali Live, not a web stack (Next.js + Postgres + Docker)
 
 **Date**: 2026-10-08
 **Status**: Accepted
-**Deciders**: Architect (revisão do PRD `security-scan-and-fix`)
+**Deciders**: Architect (review of the `security-scan-and-fix` PRD)
 
 ## Context
 
-O template NULL sugere, por padrão, o stack web **Next.js + Postgres + Docker → GitHub → Coolify**.
-O produto, porém, é operado por um prestador autônomo **leigo**, em campo, inicializando o
-**Kali Live via USB (sem instalação)** na rede do cliente. Não há servidor, internet garantida
-ou operador técnico para hospedar uma aplicação web. O PRD (Technical Decisions, linha 40)
-já determina que o stack web "**não se aplica ao MVP**".
+The NULL template defaults to the web stack **Next.js + Postgres + Docker → GitHub → Coolify**.
+The product, however, is operated by a **non-technical** independent provider, in the field,
+booting **Kali Live via USB (no install)** on the client's network. There is no server, no
+guaranteed internet, and no technical operator to host a web application. The PRD (Technical
+Decisions) already states the web stack "**does not apply to the MVP**".
 
 ## Decision
 
-O MVP é um **script/CLI executado diretamente no Kali Live já existente**, disparado a partir de
-um único comando. Não há banco de dados, container ou backend. O stack Next.js + Postgres + Docker
-**não é usado**.
+The MVP is a **script/CLI that runs directly on the existing Kali Live**, triggered by a single
+command. There is no database, container, or backend. The Next.js + Postgres + Docker stack is
+**not used**.
 
 ## Alternatives Considered
 
-### Alternative 1: Stack web (Next.js + Postgres + Docker, como no template)
-- **Pros**: UI rica, multiusuário, histórico centralizado, dashboard, deploy via Coolify.
-- **Cons**: exige instalação/hospedagem e conexão; servidor persistente a manter; incompatível com
-  boot via USB offline e com um operador leigo.
-- **Why not**: nenhum requisito do MVP precisa de servidor; adiciona custo, superfície de ataque e
-  complexidade sem entregar valor ao caso de uso.
+### Alternative 1: Web stack (Next.js + Postgres + Docker, as in the template)
+- **Pros**: rich UI, multi-user, centralized history, dashboard, deploy via Coolify.
+- **Cons**: requires hosting and connectivity; a persistent server to maintain; incompatible with
+  offline USB boot and a non-technical operator.
+- **Why not**: no MVP requirement needs a server; it adds cost, attack surface, and complexity
+  without delivering value for the use case.
 
-### Alternative 2: CLI instalado em sistema operacional fixo (não Live)
-- **Pros**: ferramentas e dados persistentes; atualizações mais fáceis.
-- **Cons**: exige instalação e uma máquina dedicada, que o operador não possui.
-- **Why not**: o Kali Live já é o ambiente real de uso (AC2); duplicar setup não resolve nada.
+### Alternative 2: CLI installed on a fixed OS (not Live)
+- **Pros**: persistent tools and data; easier updates.
+- **Cons**: requires installation and a dedicated machine the operator does not have.
+- **Why not**: Kali Live is already the real usage environment; duplicating setup solves nothing.
 
 ## Consequences
 
 ### Positive
-- Roda **offline** no USB, sem instalação (**AC2**) — pronto para uso em campo.
-- Superfície mínima: sem servidor, sem banco, sem Docker — mais fácil de entender e manter.
-- Coerente com **AC6 (não destrutivo)**, pois não há serviços nem endpoints expostos.
+- Runs **offline** from USB, no install — ready for field use.
+- Minimal surface: no server, no database, no Docker — easier to understand and maintain.
+- Consistent with **AC6 (non-destructive)**: no exposed services or endpoints.
 
 ### Negative
-- Sem persistência nativa além do USB; o relatório precisa ser salvo explicitamente (ver ADR-0004).
-- Sem histórico multi-cliente centralizado nem login.
+- No native persistence beyond the USB; the report must be saved explicitly (see ADR-0004).
+- No centralized multi-client history or login.
 
 ### Risks
-- **Risco**: se o produto evoluir para painel multi-cliente, o CLI sozinho não basta.
-  **Mitigação**: tratar como mudança de escopo que aciona a condição de reconsideração abaixo.
+- **Risk**: if the product grows into a multi-client panel, the CLI alone is not enough.
+  **Mitigation**: treat it as a scope change that triggers the reconsideration condition below.
 
 ## Condition for reconsideration
 
-Uma stack web (Next.js + Postgres + Docker) só será reconsiderada se surgir a necessidade de um
-**painel multi-cliente com login e histórico centralizado** — explicitamente **fora de escopo** no MVP.
+A web stack (Next.js + Postgres + Docker) will only be reconsidered if a **multi-client panel with
+login and centralized history** becomes a requirement — explicitly **out of scope** for the MVP.

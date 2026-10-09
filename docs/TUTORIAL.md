@@ -1,190 +1,128 @@
-# Tutorial do noobmap — do zero à rede protegida
+# noobmap tutorial — from zero to a safer network
 
-> Este guia assume que você **nunca usou Linux** e **nunca fez uma varredura de rede**.
-> Siga na ordem, sem pular etapas. Em cada passo dizemos **o que vai acontecer**.
-
----
-
-## 0. O que você vai precisar
-
-- Um **pendrive** de **8 GB ou mais** (os arquivos dele serão apagados).
-- Um **computador** onde você possa dar boot pelo pendrive (o seu notebook serve).
-- O **noobmap** (o pacote `noobmap-<versão>.zip`) — veja o passo 6.
-- **Autorização** de quem é responsável pela rede (cliente, empresa, sua casa).
-
-> ⚠️ **Regra de ouro:** só escaneie redes **que são suas** ou para as quais você tem
-> **autorização escrita**. O noobmap **não roda** sem você confirmar isso.
+> Assumes you've **never used Linux** and **never scanned a network**. Follow in order.
+> **Authorized use only:** scan networks you own or have **written permission** to test.
 
 ---
 
-## 1. Baixar o Kali Live
+## 0. What you need
 
-O Kali Live é um "Linux de pendrive": roda sem instalar nada no computador.
-
-1. Acesse **https://www.kali.org/get-kali/**.
-2. Escolha **"Live Boot"** (a opção de rodar a partir de um pendrive).
-3. Baixe o arquivo **`.iso`** (alguns GB — pode demorar).
-
----
-
-## 2. Gravar o Kali no pendrive
-
-1. Baixe um gravador de ISO:
-   - **Windows:** [Rufus](https://rufus.ie/)
-   - **Qualquer sistema:** [balenaEtcher](https://etcher.balena.io/)
-2. No gravador, selecione:
-   - a **imagem** = o arquivo `.iso` do Kali que você baixou;
-   - o **destino** = o **pendrive** (confira que é o pendrive certo!).
-3. Clique em **gravar**. Isso **apaga tudo** do pendrive.
-4. Espere terminar e ejete com segurança.
+- A **USB stick, 8 GB+** (it will be erased).
+- A **computer** you can boot from USB.
+- The **noobmap** package (`noobmap-<version>.zip`).
+- **Authorization** from whoever is responsible for the network.
 
 ---
 
-## 3. Dar boot pelo pendrive
+## 1. Download Kali Live
 
-1. Com o pendrive ligado, **ligue/reinicie** o computador.
-2. Aperte a **tecla de boot** logo no começo (aparece na tela de abertura). Comuns:
-   `F12`, `F2`, `F10`, `DEL` ou `ESC`.
-3. Escolha o **pendrive** na lista de boot.
-4. Se o computador não aceitar o pendrive, entre na **BIOS/UEFI** e:
-   - **desative o "Secure Boot"**; e/ou
-   - coloque o **USB** como primeiro na ordem de boot.
-5. Na tela do Kali, escolha **"Live system (amd64)"**.
-   - **Não** escolha "Install" nem "Graphical install".
-6. Em alguns segundos você chega na **área de trabalho do Kali**. Isso está rodando do
-   pendrive — **nada** foi instalado no computador.
+Kali Live is "Linux on a stick" — it runs without installing anything.
 
----
+1. Go to **https://www.kali.org/get-kali/**.
+2. Pick **"Live Boot"**.
+3. Download the **`.iso`** file (a few GB).
 
-## 4. Conectar à rede do cliente
+## 2. Write Kali to the USB stick
 
-1. Conecte o computador à rede que será avaliada: **cabo de rede** ou **wi-fi** do local.
-2. Abra o **Terminal** (ícone perto do menu, ou `Ctrl+Alt+T`).
+1. Get a writer: **Rufus** (Windows) or **balenaEtcher** (any OS).
+2. Select the **image** = the Kali `.iso`, and the **target** = your **USB stick**
+   (double-check it's the right drive!).
+3. **Flash**. This **erases** the stick.
+4. Eject safely.
 
----
+## 3. Boot from the USB stick
 
-## 5. Descobrir "qual é a rede"
+1. Plug the stick in and **reboot** the computer.
+2. Press the **boot key** early (`F12`, `F2`, `F10`, `DEL`, `ESC` — depends on the brand).
+3. Pick the **USB** in the boot list.
+4. If it won't boot: enter **BIOS/UEFI**, **disable Secure Boot**, and/or put **USB first**.
+5. On the Kali screen choose **"Live system"**. **Do not** choose "Install".
+6. You'll land on the Kali desktop — running from the stick. Nothing was installed.
 
-Você precisa do **endereço da rede** no formato `192.168.1.0/24`.
+## 4. Connect to the target network
 
-- No **próprio noobmap**, se você não souber, pode olhar no roteador: entre no painel
-  dele pelo navegador (endereço comum: `192.168.0.1` ou `192.168.1.1`) e veja a **LAN**.
-- Ou no terminal do Kali:
+Plug in Ethernet or join the wi-fi of the place you're assessing. Open a **Terminal**
+(`Ctrl+Alt+T`).
 
-  ```bash
-  ip route
-  ```
+## 5. Find the network address
 
-  Procure algo como `192.168.1.0/24`. O número antes de `/24` é o endereço da sua rede.
-
-> O noobmap só aceita **redes privadas** (`10.x`, `172.16–31.x`, `192.168.x`) e no máximo
-> **/24** (até 254 aparelhos). Redes públicas são recusadas.
-
----
-
-## 6. Ter o noobmap no pendrive
-
-Baixe o pacote de release **`noobmap-<versão>.zip`** (na página *Releases* do repositório,
-ou do arquivo que você recebeu).
-
-Copie o `.zip` para o **pendrive** (ou para a Área de Trabalho do Kali). Depois, no
-terminal do Kali:
+You need the network as `192.168.1.0/24`. Either check the router's admin page (often
+`192.168.0.1` / `192.168.1.1`) or run:
 
 ```bash
-cd ~/Desktop          # ou onde estiver o arquivo
+ip route
+```
+
+Find something like `192.168.1.0/24`. noobmap accepts **private networks only**
+(`10.x`, `172.16–31.x`, `192.168.x`) and at most **/24** (up to 254 devices).
+
+## 6. Get noobmap
+
+Download **`noobmap-<version>.zip`** from the repo's *Releases*. Copy it to the USB stick
+or the Kali Desktop, then:
+
+```bash
+cd ~/Desktop
 unzip noobmap-*.zip
 cd noobmap-*
 chmod +x noobmap
-./noobmap --version    # deve mostrar "noobmap <versão>"
+./noobmap --version
 ```
 
----
+## 7. Authorize (required)
 
-## 7. Autorizar (obrigatório)
+Print and have the responsible person sign `docs/roe/terms-of-engagement.md`
+(Rules of Engagement). Without it, the next step **aborts** — that's your legal protection.
 
-1. Abra e **imprima** o termo: `docs/roe/termo-de-autorizacao.md`.
-2. O responsável pela rede **assina** (ou aceita por escrito/e-mail).
-3. Guarde uma via junto ao relatório.
-
-Sem isso, o next passo **aborta** — é a sua proteção legal.
-
----
-
-## 8. Rodar a varredura
-
-Troque pelo **nome do cliente** e pela **rede** correta:
+## 8. Run the scan
 
 ```bash
-./noobmap scan --autorizado --cliente "Mercado do Zé" --rede 192.168.1.0/24
+./noobmap scan --autorizado --cliente "Client name" --rede 192.168.1.0/24
 ```
 
-O que vai acontecer:
+It records the authorization, runs Nmap **non-intrusively**, then prints a summary and
+creates the report. Don't unplug the stick or interrupt the terminal.
 
-1. Ele registra a autorização (nome + data/hora).
-2. Roda o Nmap de forma **não invasiva** (a tela mostra o progresso).
-3. Ao final, mostra um **resumo** e gera o **relatório**.
+## 9. Read the report
 
-Cuidados:
-- **Não desligue** o pendrive nem o terminal durante o processo.
-- Se der `Ctrl+C`, nada é gerado (sem relatório pela metade).
+Files land in `noobmap-out/<client>/<date>/`:
 
----
+- **`relatorio.html`** — open in a browser; this is the client document.
+- `nmap_bruto.xml` — raw data (evidence).
+- `autorizacao.json` — proof of authorization.
 
-## 9. Ler o relatório
+Findings are grouped by severity: **Critical → High → Medium → Low → Informational**.
+Each has "How to fix" with **where to go**, **what to change**, and **what NOT to touch**.
 
-Os arquivos ficam em `noobmap-out/<cliente>/<data>/`:
+## 10. Apply the fixes (carefully)
 
-- **`relatorio.html`** — abra no navegador. É o documento do cliente.
-- `nmap_bruto.xml` — dado técnico (guarde).
-- `autorizacao.json` — prova de autorização.
+1. **First:** save/export the router's current configuration (backup).
+2. Change **one thing at a time**, exactly as instructed.
+3. After each change, **test** that the internet and devices still work.
+4. If something breaks, **restore the backup**.
+5. When unsure, **stop** (the report also warns about false positives).
 
-No relatório, os riscos vêm por **gravidade**: **Crítico → Alto → Médio → Baixo → Informativo**.
-Cada item tem **"Como corrigir"** com: **onde ir**, **o que mudar** e **o que NÃO mexer**.
+noobmap **never** applies changes — you do.
 
----
-
-## 10. Aplicar as correções (com cuidado)
-
-1. **Antes de qualquer mudança:** abra o painel do roteador e **salve/exporte a
-   configuração atual** (backup). Todo passo de correção lembra disso.
-2. Faça **uma mudança por vez**, exatamente como o relatório orienta.
-3. Depois de cada mudança, **teste** se a internet e os aparelhos continuam funcionando.
-4. Se algo quebrar: **restaure o backup** e reinicie o roteador.
-5. Na dúvida, **pare** — o relatório também avisa sobre **falsos positivos**.
-
-> O noobmap **nunca** aplica mudanças. Você é quem mexe. Ele só diz o caminho.
-
----
-
-## 11. Re-scan para confirmar
-
-Rode de novo para ver se a rede ficou mais limpa:
+## 11. Re-scan to confirm
 
 ```bash
-./noobmap scan --autorizado --cliente "Mercado do Zé" --rede 192.168.1.0/24
+./noobmap scan --autorizado --cliente "Client name" --rede 192.168.1.0/24
 ```
 
-Compare o **antes** e o **depois**. O ideal é **zero achados Crítico/Alto** em aberto.
+Ideal outcome: **zero open Critical/High** findings.
 
----
+## 12. Hand off and save
 
-## 12. Entregar e guardar
+- **Copy the client folder to the USB stick** (Kali Live forgets files on shutdown).
+- Deliver `relatorio.html` to the client.
+- Shut down the Live system and remove the stick.
 
-- **Copie a pasta do cliente para o pendrive** (o Kali Live não guarda os arquivos ao
-  desligar).
-- Entregue o `relatorio.html` ao cliente (imprima ou envie).
-- **Desligue o Kali** pelo menu (ou `sudo poweroff`) e remova o pendrive.
+## Troubleshooting
 
----
-
-## Problemas comuns
-
-| Situação | O que fazer |
+| Symptom | Fix |
 |---|---|
-| "nmap não encontrado" | Você não está no Kali Live. Rode dentro do Kali. |
-| "Varredura bloqueada: é obrigatória autorização" | Falta `--autorizado` (e o termo assinado). |
-| "Apenas redes privadas…" | Use a rede interna do cliente (`192.168.x.0/24`), não um IP público. |
-| "Rede grande demais" | Use no máximo `/24`. |
-| Não achei minha rede | Veja o passo 5 (`ip route` ou painel do roteador). |
-
-Pronto! Você fez uma avaliação de segurança de rede do começo ao fim. 🎉
+| "nmap not found" | You're not on Kali Live — run it inside Kali. |
+| "scan blocked: authorization required" | Add `--autorizado` (and the signed term). |
+| "private networks only" | Use the client's LAN (`192.168.x.0/24`), not a public IP. |
+| "network too large" | Use at most `/24`. |

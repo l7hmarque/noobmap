@@ -1,48 +1,48 @@
-# ADR-0003: Ferramenta não destrutiva / apenas orientativa
+# ADR-0003: Non-destructive / advisory-only tool
 
 **Date**: 2026-10-08
 **Status**: Accepted
-**Deciders**: Architect (revisão do PRD `security-scan-and-fix`)
+**Deciders**: Architect (review of the `security-scan-and-fix` PRD)
 
 ## Context
 
-O maior risco do produto é **corrigir e quebrar a internet ou os dispositivos do cliente**
-(PRD Risks: probabilidade Alta, impacto Alto). O MVP é operado por um leigo, em rede de produção
-do cliente (pequeno comércio ou residência), sem janela de manutenção garantida. Aplicar mudanças
-automaticamente de configuração de rede é irrecuperável para esse perfil.
+The product's biggest risk is **fixing something and breaking the client's internet or devices**
+(PRD Risks: High likelihood, High impact). The MVP is operated by a non-technical person, on the
+client's production network (small business or home), with no guaranteed maintenance window.
+Applying network configuration changes automatically is unrecoverable for this profile.
 
 ## Decision
 
-O MVP é **não destrutivo e apenas orientativo (advisory-only)**: ele **nunca aplica** mudanças de
-configuração na rede, em roteadores/firewalls ou em dispositivos. O resultado é sempre **orientação
-passo a passo** para um humano executar. Isso implementa **AC6**.
+The MVP is **non-destructive and advisory-only**: it **never applies** configuration changes to
+the network, routers/firewalls, or devices. The output is always **step-by-step guidance** for a
+human to execute. This implements **AC6**.
 
 ## Alternatives Considered
 
-### Alternative 1: Aplicar correções automaticamente (auto-remediation)
-- **Pros**: conveniência; correção imediata sem trabalho manual.
-- **Cons**: risco altíssimo de derrubar a rede/dispositivos; requer credenciais de admin, rollback e
-  janela de manutenção; erros são irreversíveis para um leigo.
-- **Why not**: viola **AC6**, amplifica o maior risco do PRD e está fora de escopo
-  ("Correção automática aplicada na rede — o MVP só orienta, não executa mudanças").
+### Alternative 1: Apply fixes automatically (auto-remediation)
+- **Pros**: convenience; immediate fixes with no manual work.
+- **Cons**: very high risk of taking down the network/devices; requires admin credentials,
+  rollback, and a maintenance window; mistakes are irreversible for a non-technical person.
+- **Why not**: violates **AC6**, amplifies the PRD's biggest risk, and is out of scope
+  ("Automatic remediation applied to the network — the MVP only advises, it does not apply changes").
 
-### Alternative 2: Ferramenta de exploração ativa (Metasploit etc.)
-- **Pros**: valida a explorabilidade real dos achados.
-- **Cons**: intrusivo, pode causar indisponibilidade, implicações legais e de escopo maiores.
-- **Why not**: explicitamente **fora de escopo** ("risco alto"); o MVP orienta, não explora.
+### Alternative 2: Active exploitation tool (Metasploit etc.)
+- **Pros**: validates the real exploitability of findings.
+- **Cons**: intrusive, can cause downtime, larger legal and scope implications.
+- **Why not**: explicitly **out of scope** ("high risk"); the MVP advises, it does not exploit.
 
 ## Consequences
 
 ### Positive
-- Elimina a principal causa de dano ao cliente — a rede permanece intacta por construção.
-- Alinha com o modelo de negócio: o prestador orienta e o cliente/ele aplica sob controle.
-- Simplifica o produto: sem credenciais, sem rollback, sem transações de mudança.
+- Removes the main cause of client harm — the network stays intact by construction.
+- Fits the business model: the provider advises and the client (or the provider) applies under control.
+- Simplifies the product: no credentials, no rollback, no change transactions.
 
 ### Negative
-- A proteção só se concretiza se o humano executar as correções (depende do checklist).
-- Sem validação ativa de explorabilidade — possíveis falsos positivos a comunicar.
+- Protection only materializes if a human executes the fixes (depends on the checklist).
+- No active exploitability validation — possible false positives to communicate.
 
 ### Risks
-- **Risco**: usuário pode interpretar uma recomendação como ordem e aplicar algo incorreto.
-  **Mitigação**: linguagem simples, glossário, aviso de falso-positivo e, no máximo, **backup da
-  configuração** antes de qualquer mudança manual — nunca aplicação automática.
+- **Risk**: a user may read a recommendation as an order and apply something incorrect.
+  **Mitigation**: plain language, glossary, false-positive warning, and at most a **configuration
+  backup** before any manual change — never automatic application.

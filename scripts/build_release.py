@@ -34,15 +34,24 @@ def build():
     stage.mkdir(parents=True)
 
     _copy(SRC / "noobmap", stage / "src" / "noobmap")
-    shutil.copy2(ROOT / "noobmap", stage / "noobmap")
-    shutil.copy2(ROOT / "pyproject.toml", stage / "pyproject.toml")
-    (stage / "docs" / "roe").mkdir(parents=True)
-    shutil.copy2(ROOT / "docs" / "uso.md", stage / "docs" / "uso.md")
-    shutil.copy2(
-        ROOT / "docs" / "roe" / "termo-de-autorizacao.md",
-        stage / "docs" / "roe" / "termo-de-autorizacao.md",
-    )
-    shutil.copy2(ROOT / "docs" / "release" / "INSTALL.md", stage / "INSTALL.md")
+    for rel in [
+        "noobmap",
+        "pyproject.toml",
+        "README.md",
+        "README.pt-BR.md",
+        "LICENSE",
+        "docs/usage.md",
+        "docs/TUTORIAL.md",
+        "docs/TUTORIAL.pt-BR.md",
+        "docs/FAQ.md",
+        "docs/FAQ.pt-BR.md",
+        "docs/roe/termo-de-autorizacao.md",
+        "docs/roe/terms-of-engagement.md",
+    ]:
+        src = ROOT / rel
+        dst = stage / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
 
     zip_path = DIST / "{n}.zip".format(n=name)
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zf:

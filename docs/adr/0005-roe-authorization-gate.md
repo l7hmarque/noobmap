@@ -1,54 +1,54 @@
-# ADR-0005: Gate obrigatório de autorização (RoE) via `--autorizado`
+# ADR-0005: Mandatory authorization (RoE) gate via `--autorizado`
 
 **Date**: 2026-10-08
 **Status**: Accepted
-**Deciders**: Architect (revisão do PRD `security-scan-and-fix`)
+**Deciders**: Architect (review of the `security-scan-and-fix` PRD)
 
 ## Context
 
-Escanear uma rede sem autorização é o maior risco de natureza **legal/ética** do produto
-(PRD Risks: probabilidade Alta, impacto Alto). Mesmo que o cliente tenha contratado o serviço, é
-preciso um **consentimento escrito** claro (Rules of Engagement) que delimite escopo e responsabilidade.
-O operador é leigo, então a barreira deve ser explícita e impossível de ignorar por acidente.
+Scanning a network without authorization is the product's biggest **legal/ethical** risk (PRD Risks:
+High likelihood, High impact). Even if the client hired the service, a clear **written consent**
+(Rules of Engagement) is needed, delimiting scope and responsibility. The operator is non-technical,
+so the barrier must be explicit and impossible to skip by accident.
 
 ## Decision
 
-A autorização é um **gate obrigatório**: o script só inicia a varredura com a flag **`--autorizado`**,
-que confirma a existência de um **termo de 1 página assinado/aceito por escrito**. Sem a flag, o
-script **aborta sem escanear**. Isso implementa **AC1**; a flag registra **data/hora e nome do cliente**
-(Open Question resolvida) para rastreabilidade.
+Authorization is a **mandatory gate**: the script only starts the scan with the **`--autorizado`**
+flag, which confirms a **one-page term signed/accepted in writing** exists. Without the flag, the
+script **aborts without scanning**. This implements **AC1**; the flag records **date/time and client
+name** for traceability.
 
 ## Alternatives Considered
 
-### Alternative 1: Sem gate — confiar no bom senso / contrato verbal
-- **Pros**: zero fricção para o operador.
-- **Cons**: não deixa evidência; risco de varredura não autorizada; exposição legal/ética alta.
-- **Why not**: viola **AC1** e deixa o maior risco do PRD sem mitigação.
+### Alternative 1: No gate — rely on common sense / verbal contract
+- **Pros**: zero friction for the operator.
+- **Cons**: leaves no evidence; risk of unauthorized scanning; high legal/ethical exposure.
+- **Why not**: violates **AC1** and leaves the PRD's biggest risk unmitigated.
 
-### Alternative 2: Aviso interativo "tem certeza? (s/n)" apenas
-- **Pros**: simples; alguma fricção.
-- **Cons**: fácil de aceitar por reflexo; não exige um termo escrito; fraca rastreabilidade.
-- **Why not**: consentimento clicado às pressas não equivale a autorização escrita; não evidencia
-  escopo/ROE nem registra cliente.
+### Alternative 2: Interactive "are you sure? (y/n)" prompt only
+- **Pros**: simple; some friction.
+- **Cons**: easy to accept reflexively; no written term required; weak traceability.
+- **Why not**: a rushed click is not written authorization; it does not evidence scope/RoE nor record
+  the client.
 
-### Alternative 3: Bloqueio total sem qualquer escape (hard gate sem flag)
-- **Pros**: máxima segurança.
-- **Cons**: inviável operacionalmente; o operador legitimamente autorizado precisa prosseguir.
-- **Why not**: precisamos de um gate **auditável e explícito**, não de uma impossibilidade — a flag
-  `--autorizado` + registro é o equilíbrio correto.
+### Alternative 3: Hard gate with no escape (no flag)
+- **Pros**: maximum safety.
+- **Cons**: operationally unworkable; the legitimately authorized operator must proceed.
+- **Why not**: we need an **auditable and explicit** gate, not an impossibility — the `--autorizado`
+  flag + record is the right balance.
 
 ## Consequences
 
 ### Positive
-- Impede varredura acidental sem autorização — aplica **AC1** de forma determinística.
-- Gera trilha auditável (data/hora + nome do cliente) anexável ao termo assinado.
-- Reduz exposição legal/ética do operador e do produto.
+- Prevents accidental scanning without authorization — applies **AC1** deterministically.
+- Produces an auditable trail (date/time + client name) attachable to the signed term.
+- Reduces the operator's and the product's legal/ethical exposure.
 
 ### Negative
-- Adiciona um passo (obter/assinar o termo) antes de cada atendimento.
-- Requer manter o modelo do termo de 1 página fora do código.
+- Adds a step (obtaining/signing the term) before each engagement.
+- Requires keeping the one-page term template out of the code.
 
 ### Risks
-- **Risco**: alguém contornar o gate ou reutilizar `--autorizado` indevidamente.
-  **Mitigação**: exigir e registrar explicitamente os campos de autorização (data/hora + cliente) e
-  documentar no termo que o consentimento é específico por cliente/atendimento.
+- **Risk**: someone bypasses the gate or misuses `--autorizado`.
+  **Mitigation**: require and explicitly record the authorization fields (date/time + client) and
+  document in the term that consent is specific per client/engagement.
