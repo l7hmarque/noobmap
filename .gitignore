@@ -1,0 +1,52 @@
+# ============================================================
+#  noobmap — repositório público
+# ============================================================
+
+# deps / build
+node_modules/
+.next/
+dist/
+build/
+out/
+
+# python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.venv/
+*.cover
+
+# ambiente / segredos
+.env
+.env.*
+*.pem
+
+# logs / temporários
+*.log
+.DS_Store
+Thumbs.db
+
+# ============================================================
+#  maquinaria interna do autor (mantida local, NÃO publicada)
+# ============================================================
+.ecc/
+.opencode/
+.claude/
+.archify/
+plans/
+playbook.data.js
+AGENTS.md
+opencode.json
+scripts/lib.js
+scripts/phase.js
+scripts/next.js
+scripts/test.js
+scripts/new-project.ps1
+scripts/dashboard.py
+docs/tdd/
+docs/reviews/
+docs/growth/
+docs/qa/
+docs/ops/
+docs/release/

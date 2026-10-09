@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="noobmap">
+  <defs>
+    <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#34e3a8"/>
+      <stop offset="1" stop-color="#0b8f66"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="244" height="244" rx="54" fill="#0e1a17"/>
+  <path d="M128 30 L204 62 V130 C204 178 170 210 128 226 C86 210 52 178 52 130 V62 Z" fill="url(#shield)"/>
+  <g stroke="#0e1a17" stroke-width="8" stroke-linecap="round">
+    <line x1="100" y1="112" x2="156" y2="112"/>
+    <line x1="100" y1="112" x2="128" y2="164"/>
+    <line x1="156" y1="112" x2="128" y2="164"/>
+  </g>
+  <g fill="#0e1a17">
+    <circle cx="100" cy="112" r="11"/>
+    <circle cx="156" cy="112" r="11"/>
+    <circle cx="128" cy="164" r="11"/>
+    <circle cx="128" cy="112" r="7"/>
+  </g>
+  <circle cx="150" cy="150" r="30" fill="none" stroke="#0e1a17" stroke-width="10"/>
+  <line x1="172" y1="172" x2="196" y2="196" stroke="#0e1a17" stroke-width="12" stroke-linecap="round"/>
+</svg>
