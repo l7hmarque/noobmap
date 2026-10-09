@@ -27,6 +27,10 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
+# saída gerada (relatórios/dados de cliente — nunca commitar)
+noobmap-out/
+relatorio-fake/
+
 # ============================================================
 #  maquinaria interna do autor (mantida local, NÃO publicada)
 # ============================================================
